@@ -1,0 +1,14 @@
+{
+  "name": "socketio",
+  "version": "1.0.0",
+  "description": "Simple Socket IO example",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run client & npm run server",
+    "client": "npx http-server ./client",
+    "server": "node ./server/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
