@@ -1,0 +1,16 @@
+.chat-history{
+    padding:10px;
+    maring:10px;
+    border: 1px solid #000;
+}
+
+.chat-form{
+    display: flex;
+}
+
+.chat-form .username,
+.chat-form .message,
+.chat-form button {
+    padding:5px;margin:5px
+}
+
