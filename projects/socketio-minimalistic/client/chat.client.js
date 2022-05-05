@@ -1,4 +1,25 @@
 const socket = io('ws://localhost:8080');
+
+/*
+ * Load conversation history
+ */
+socket.on('loadHistory', (history) => {
+  const chatHistory = document.querySelector('.chat-history');
+
+  history.forEach((message) => {
+    const el = document.createElement('li');
+    el.innerHTML = message;
+    chatHistory.appendChild(el);
+  });
+});
+
+socket.on('message', text => {
+  const chatHistory = document.querySelector('.chat-history');
+  const el = document.createElement('li');
+  el.innerHTML = text;
+  chatHistory.appendChild(el);
+});
+
 function handleSubmit () {
   // Get text values.
   const username = document.querySelector('input[name="username"]').value;
@@ -10,9 +31,6 @@ function handleSubmit () {
   socket.emit('message', { username, message });
 }
 
-/**
- * Handle Enter.
- */
 document.addEventListener('keydown', function (event) {
   if (event.keyCode === 13) {
     handleSubmit();
@@ -24,11 +42,4 @@ document.addEventListener('keydown', function (event) {
  */
 document.querySelector('button[name="send"]').onclick = () => {
   handleSubmit();
-};
-
-socket.on('message', text => {
-  const el = document.createElement('li');
-  el.innerHTML = text;
-  document.querySelector('ul').appendChild(el);
-
-});
+}
