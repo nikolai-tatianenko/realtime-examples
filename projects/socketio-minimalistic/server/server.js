@@ -11,10 +11,16 @@ io.on('connection', (socket) => {
   socket.emit('loadHistory', chatHistory);
   socket.on('message', ({ username="<unknown username>", message ="<empty message>"}) => {
     // Add the new message to the chat history
-    chatHistory.push(`${username}: ${message}`);
+    const currentDateTime = new Date().toLocaleString();
+    const chatItemObject = { username, message, dateTime: currentDateTime };
+    const chatItemFormatter = ({ username, message, dateTime }) => {
+
+      return `${username}: ${message} (${dateTime})`;
+    };
+    chatHistory.push(chatItemObject);
 
     // Emit the new message to all connected clients
-    io.emit('message', `${username}: ${message}`);
+    io.emit('message', chatItemObject);
   });
 });
 

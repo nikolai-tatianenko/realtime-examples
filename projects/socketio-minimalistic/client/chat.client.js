@@ -1,5 +1,16 @@
 const socket = io('ws://localhost:8080');
 
+function prepareChatItem (chatHistory, message) {
+  const el = document.createElement('li');
+  el.innerHTML = prepareChatItemMessage(message);
+  chatHistory.appendChild(el);
+}
+
+function prepareChatItemMessage ({ username, message, dateTime }) {
+  console.log({ username, message, dateTime });
+  return `${username}: ${message} (${dateTime})`;
+}
+
 /*
  * Load conversation history
  */
@@ -7,17 +18,13 @@ socket.on('loadHistory', (history) => {
   const chatHistory = document.querySelector('.chat-history');
 
   history.forEach((message) => {
-    const el = document.createElement('li');
-    el.innerHTML = message;
-    chatHistory.appendChild(el);
+    prepareChatItem(chatHistory, message);
   });
 });
 
-socket.on('message', text => {
+socket.on('message', message => {
   const chatHistory = document.querySelector('.chat-history');
-  const el = document.createElement('li');
-  el.innerHTML = text;
-  chatHistory.appendChild(el);
+  prepareChatItem(chatHistory, message);
 });
 
 function handleSubmit () {
