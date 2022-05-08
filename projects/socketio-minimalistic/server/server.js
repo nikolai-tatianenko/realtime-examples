@@ -1,20 +1,18 @@
-const http = require('http').createServer();
-
-const io = require('socket.io')(http, {
-  cors: { origin: '*' },
-});
+const { createServer } = require('http');
+const io = require('socket.io')(createServer(), { cors: { origin: '*' } });
 
 const chatHistory = [];
 
 io.on('connection', (socket) => {
   // Add a new "loadHistory" event to send the chat history to the client
   socket.emit('loadHistory', chatHistory);
-  socket.on('message', ({ username="<unknown username>", message ="<empty message>"}) => {
+
+  socket.on('message', ({ username = '<unknown username>', message = '<empty message>' }) => {
     // Add the new message to the chat history
     const currentDateTime = new Date().toLocaleString();
     const chatItemObject = { username, message, dateTime: currentDateTime };
-    const chatItemFormatter = ({ username, message, dateTime }) => {
 
+    const chatItemFormatter = ({ username, message, dateTime }) => {
       return `${username}: ${message} (${dateTime})`;
     };
     chatHistory.push(chatItemObject);
@@ -24,7 +22,5 @@ io.on('connection', (socket) => {
   });
 });
 
-http.listen(8080, () => console.log('listening on http://localhost:8080'));
-
-
- 
+const port = process.env.PORT || 8080;
+io.listen(port, () => console.log(`listening on http://localhost:${port}`));
