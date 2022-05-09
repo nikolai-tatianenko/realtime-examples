@@ -31,10 +31,14 @@ io.on('connection', (socket) => {
     const currentDateTime = new Date().toLocaleString();
     const chatItemObject = { username, message, dateTime: currentDateTime };
 
-    const chatItemFormatter = ({ username, message, dateTime }) => {
-      return `${username}: ${message} (${dateTime})`;
-    };
     chatHistory.push(chatItemObject);
+
+    // Write updated chat history to file
+    fs.writeFile(preparedFile, JSON.stringify(chatHistory), (err) => {
+      if (err) {
+        console.log(`Error writing chat history to file: ${err.message}`);
+      }
+    });
 
     // Emit the new message to all connected clients
     io.emit('message', chatItemObject);
