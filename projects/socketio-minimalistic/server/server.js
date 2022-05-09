@@ -1,10 +1,11 @@
+require('dotenv').config();
+
 const { createServer } = require('http');
 const io = require('socket.io')(createServer(), { cors: { origin: '*' } });
 const fs = require('fs');
 const path = require('path');
 
-const CHAT_ARCHIVE_FILE_PATH = './data/chatArchive.json';
-
+const CHAT_ARCHIVE_FILE_PATH = process.env.CHAT_ARCHIVE_FILE_PATH || './data/chatArchive.json';
 // Load chat history from file, or create an empty array if file doesn't exist
 let chatHistory = [];
 const preparedFile = path.resolve(__dirname, CHAT_ARCHIVE_FILE_PATH);
