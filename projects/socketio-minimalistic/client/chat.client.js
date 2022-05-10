@@ -1,52 +1,50 @@
 const socket = io('ws://localhost:8080');
+const chatHistory = document.querySelector('.chat-history');
+const usernameInput = document.querySelector('input[name="username"]');
+const messageInput = document.querySelector('input[name="message"]');
+const sendButton = document.querySelector('button[name="send"]');
 
-function prepareChatItem (chatHistory, message) {
+// Prepare and append chat item to the chat history.
+function prepareChatItem (message) {
   const el = document.createElement('li');
   el.innerHTML = prepareChatItemMessage(message);
+  el.classList.add('chat-item');
   chatHistory.appendChild(el);
 }
 
+// Prepare chat item message.
 function prepareChatItemMessage ({ username, message, dateTime }) {
   console.log({ username, message, dateTime });
   return `${username}: ${message} (${dateTime})`;
 }
 
-/*
- * Load conversation history
- */
+// Load conversation history.
 socket.on('loadHistory', (history) => {
-  const chatHistory = document.querySelector('.chat-history');
-
   history.forEach((message) => {
-    prepareChatItem(chatHistory, message);
+    prepareChatItem(message);
   });
 });
 
-socket.on('message', message => {
-  const chatHistory = document.querySelector('.chat-history');
-  prepareChatItem(chatHistory, message);
+// Handle incoming message.
+socket.on('message', (message) => {
+  prepareChatItem(message);
 });
 
+// Handle form submission.
 function handleSubmit () {
-  // Get text values.
-  const username = document.querySelector('input[name="username"]').value;
-  const message = document.querySelector('input[name="message"]').value;
-
-  // Clear data.
-  document.querySelector('input[name="message"]').value = '';
+  const username = usernameInput.value;
+  const message = messageInput.value;
+  messageInput.value = '';
 
   socket.emit('message', { username, message });
 }
 
-document.addEventListener('keydown', function (event) {
+// Submit on Enter key press.
+document.addEventListener('keydown', (event) => {
   if (event.keyCode === 13) {
     handleSubmit();
   }
 });
 
-/**
- * Handle Submit.
- */
-document.querySelector('button[name="send"]').onclick = () => {
-  handleSubmit();
-}
+// Submit on button click.
+sendButton.onclick = handleSubmit;
