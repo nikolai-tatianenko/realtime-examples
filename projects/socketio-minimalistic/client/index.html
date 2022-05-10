@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Chat</title>
-        <script src="https://cdn.socket.io/socket.io-3.0.5.js"></script>
-        <script defer src="chat.client.js"></script>
-        <link rel="stylesheet" type="text/css" href="style.css">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Chat</title>
+    <script defer src="https://cdn.socket.io/socket.io-3.0.5.js"></script>
+    <script defer src="./chat.client.js"></script>
+    <link href="style.css" rel="stylesheet" type="text/css">
+</head>
 
-    <body>
-        <h1>Chat</h1>
-        <ul class="chat-history">
-            <h2>chat history:</h2>
-        </ul>
-        <div class="chat-form">
-            <input class="username" name="username" placeholder="Your UserNaem" value="Username">
-            <input class="message" name="message" placeholder="Write here">
-            <button class="button" name="send">Send</button>
-        </div>
-    </body>
+<body>
+<h1>Chat</h1>
+<div class="chat-container">
+    <h2>Chat History:</h2>
+    <ul class="chat-history"></ul>
+    <div class="chat-form">
+        <input class="username" name="username" placeholder="Your Username" value="Username">
+        <input class="message" name="message" placeholder="Write here">
+        <button class="button" name="send">Send</button>
+    </div>
+</div>
+</body>
+
 </html>
