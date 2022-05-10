@@ -1,16 +1,37 @@
-.chat-history{
-    padding:10px;
-    maring:10px;
+.chat-history {
+    padding: 10px 10px 10px 30px;
+    margin: 10px;
     border: 1px solid #000;
+    list-style: none;
 }
 
-.chat-form{
+.chat-history li.chat-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #000;
+    border-radius: 5px;
+}
+
+.chat-form {
     display: flex;
+    align-items: center;
 }
 
 .chat-form .username,
 .chat-form .message,
 .chat-form button {
-    padding:5px;margin:5px
+    padding: 5px;
+    margin: 5px;
 }
 
+.chat-form .username,
+.chat-form .message {
+    flex: 1;
+}
+
+.chat-form button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
