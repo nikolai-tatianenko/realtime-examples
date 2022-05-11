@@ -2,9 +2,9 @@
   "name": "socket-minimalistic-server",
   "version": "0.0.1",
   "description": "socket minimalistic express server",
-  "main": "server.js",
+  "main": "server.ts",
   "scripts": {
-    "start": "node index.js",
+    "start": "node server.ts",
     "test": "jest"
   },
   "keywords": [],
@@ -15,5 +15,12 @@
     "jest": "latest",
     "socket.io": "^3.0.5",
     "ws": "^7.4.3"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/node": "^20.2.5",
+    "@types/socket.io": "^3.0.2",
+    "nodemon": "^2.0.22",
+    "typescript": "^5.1.3"
   }
 }

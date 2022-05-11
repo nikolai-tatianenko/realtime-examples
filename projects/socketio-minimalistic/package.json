@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run client & npm run server",
-    "client": "npx http-server ./client -p 8088 &&  open http://localhost:8088",
-    "server": "node ./server/server.ts"
+    "client": "npx http-server ./client -p 8088 && open http://localhost:8088",
+    "server": "nodemon --watch ./server --exec ts-node ./server/server.ts"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,8 @@
   "devDependencies": {
     "@types/dotenv": "latest",
     "@types/node": "latest",
-    "@types/socket.io": "latest"
+    "@types/socket.io": "latest",
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.1"
   }
 }
