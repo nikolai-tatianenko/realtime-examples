@@ -1,16 +1,18 @@
 {
   "name": "socket-minimalistic-server",
   "version": "0.0.1",
-  "description": "socket minimalistoc express server",
+  "description": "socket minimalistic express server",
   "main": "server.js",
   "scripts": {
-    "start": "node ."
+    "start": "node index.js",
+    "test": "jest"
   },
   "keywords": [],
   "author": "Nikolai Tatianenko",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^9.0.1",
+    "jest": "latest",
     "socket.io": "^3.0.5",
     "ws": "^7.4.3"
   }
