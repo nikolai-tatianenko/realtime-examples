@@ -8,7 +8,7 @@ const path = require('path');
 const CHAT_ARCHIVE_FILE_PATH = process.env.CHAT_ARCHIVE_FILE_PATH || './data/chatArchive.json';
 
 // Load chat history from file, or create an empty array if file doesn't exist
-let chatHistory = [];
+let chatHistory: any[] = [];
 const preparedFile = path.resolve(__dirname, CHAT_ARCHIVE_FILE_PATH);
 
 try {
@@ -25,7 +25,10 @@ try {
   fs.writeFileSync(preparedFile, JSON.stringify(chatHistory));
 }
 
-io.on('connection', (socket) => {
+const server: Server = createServer();
+const io: SocketIOServer = new SocketIOServer(server, { cors: { origin: '*' } });
+
+io.on('connection', (socket: Socket) => {
   // Send the chat history to the connected client
   socket.emit('loadHistory', chatHistory);
 
@@ -48,5 +51,5 @@ io.on('connection', (socket) => {
   });
 });
 
-const port = process.env.PORT || 8080;
-io.listen(port, () => console.log(`Listening on http://localhost:${port}`));
+const port: string | number = process.env.PORT || 8080;
+server.listen(port, () => console.log(`Listening on http://localhost:${port}`));

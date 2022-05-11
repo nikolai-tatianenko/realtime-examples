@@ -6,12 +6,17 @@
   "scripts": {
     "start": "npm run client & npm run server",
     "client": "npx http-server ./client -p 8088 &&  open http://localhost:8088",
-    "server": "node ./server/server.js"
+    "server": "node ./server/server.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "latest"
+  },
+  "devDependencies": {
+    "@types/dotenv": "latest",
+    "@types/node": "latest",
+    "@types/socket.io": "latest"
   }
 }
