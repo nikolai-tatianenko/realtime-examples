@@ -1,3 +1,4 @@
+'use strict';
 require('dotenv').config();
 
 const { createServer } = require('http');
@@ -26,29 +27,31 @@ try {
 }
 
 const server: Server = createServer();
-const io: SocketIOServer = new SocketIOServer(server, { cors: { origin: '*' } });
+const io: SocketIOServer = new SocketIOServer(server,
+  { cors: { origin: '*' } });
 
 io.on('connection', (socket: Socket) => {
   // Send the chat history to the connected client
   socket.emit('loadHistory', chatHistory);
 
-  socket.on('message', ({ username = '<unknown username>', message = '<empty message>' }) => {
-    // Add the new message to the chat history
-    const currentDateTime = new Date().toLocaleString();
-    const chatItemObject = { username, message, dateTime: currentDateTime };
+  socket.on('message',
+    ({ username = '<unknown username>', message = '<empty message>' }) => {
+      // Add the new message to the chat history
+      const currentDateTime = new Date().toLocaleString();
+      const chatItemObject = { username, message, dateTime: currentDateTime };
 
-    chatHistory.push(chatItemObject);
+      chatHistory.push(chatItemObject);
 
-    // Write updated chat history to file
-    fs.writeFile(preparedFile, JSON.stringify(chatHistory), (err) => {
-      if (err) {
-        console.log(`Error writing chat history to file: ${err.message}`);
-      }
+      // Write updated chat history to file
+      fs.writeFile(preparedFile, JSON.stringify(chatHistory), (err) => {
+        if (err) {
+          console.log(`Error writing chat history to file: ${err.message}`);
+        }
+      });
+
+      // Emit the new message to all connected clients
+      io.emit('message', chatItemObject);
     });
-
-    // Emit the new message to all connected clients
-    io.emit('message', chatItemObject);
-  });
 });
 
 const port: string | number = process.env.PORT || 8080;
