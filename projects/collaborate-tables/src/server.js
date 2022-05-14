@@ -19,9 +19,12 @@ const PORT = process.env.PORT || 8000;
  * This server serves static files from the 'public' directory.
  */
 const server = http.createServer((req, res) => {
-  const filePath = req.url === '/' ? 'index.html' : req.url; // Determine the file path based on the request URL
-  const fileExt = path.extname(filePath); // Get the file extension from the file path
-  const contentType = getContentType(fileExt); // Get the content type based on the file extension
+  // Determine the file path based on the request URL
+  const filePath = req.url === '/' ? 'index.html' : req.url;
+  // Get the file extension from the file path
+  const fileExt = path.extname(filePath);
+  // Get the content type based on the file extension
+  const contentType = getContentType(fileExt);
 
   fs.readFile(path.join(__dirname, '../public', filePath), (err, content) => {
     console.log('file', err, content);
@@ -61,4 +64,40 @@ function getContentType (fileExt) {
       return 'text/plain';
   }
 }
+
+/**
+ * Start the server and listen for incoming connections.
+ */
+server.listen(PORT, HOST, () => {
+  console.log(`Server running at http://${HOST}:${PORT}/`);
+});
+
+// Create a WebSocket server using the HTTP server
+const wss = new WebSocket.Server({ server });
+
+// Array to store messages
+const messages = [];
+
+wss.on('connection', (ws, req) => {
+  // Get the IP address of the connected client
+  const ip = req.socket.remoteAddress;
+  console.log(`[open] Connected ${ip}`);
+
+  // Send all stored messages to the newly connected client
+  broadcastMessages(messages, ws);
+
+  ws.on('message', (message) => {
+    console.log('[message] Received: ' + message);
+
+    // Store the received message
+    messages.push(message);
+
+    // Broadcast the received message to all connected clients except the sender
+    broadcastMessage(message, ws);
+  });
+
+  ws.on('close', () => {
+    console.log(`[close] Disconnected ${ip}`);
+  });
+});
 
