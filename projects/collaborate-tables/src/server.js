@@ -1,6 +1,6 @@
 /**
  * @file server.js
- * @brief Simple HTTP server with WebSocket support.
+ * Simple HTTP server with WebSocket support.
  */
 
 const WebSocket = require('ws');
@@ -14,7 +14,7 @@ const HOST = process.env.HOST || '127.0.0.1';
 const PORT = process.env.PORT || 8000;
 
 /**
- * @brief Create an HTTP server to handle requests.
+ * Create an HTTP server to handle requests.
  *
  * This server serves static files from the 'public' directory.
  */
@@ -42,4 +42,23 @@ const server = http.createServer((req, res) => {
     }
   });
 });
+
+/**
+ * Get the content type based on the file extension.
+ *
+ * @param fileExt The file extension.
+ * @return The corresponding content type.
+ */
+function getContentType (fileExt) {
+  switch (fileExt) {
+    case '.html':
+      return 'text/html';
+    case '.css':
+      return 'text/css';
+    case '.js':
+      return 'text/javascript';
+    default:
+      return 'text/plain';
+  }
+}
 
