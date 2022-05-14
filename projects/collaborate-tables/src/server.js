@@ -115,3 +115,16 @@ function broadcastMessages (messages, client) {
   });
 }
 
+/**
+ * Broadcast a message to all connected clients except the sender.
+ *
+ * @param message The message to broadcast.
+ * @param ws The WebSocket client that sent the message.
+ */
+function broadcastMessage (message, ws) {
+  wss.clients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN && client !== ws) {
+      client.send(message, { binary: false });
+    }
+  });
+}
