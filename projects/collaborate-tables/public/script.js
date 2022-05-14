@@ -11,4 +11,19 @@
   let tooltip;
   let sessionId;
 
+  /**
+   * Create or update the tooltip element.
+   */
+  function createTooltip () {
+    // Remove existing tooltip if present
+    if (tooltip) {
+      tooltip.remove();
+    }
+
+    // Create new tooltip element
+    tooltip = document.createElement('div');
+    tooltip.id = 'tooltip';
+    tooltip.classList.add('tooltip');
+    document.body.appendChild(tooltip);
+  }
 })();
