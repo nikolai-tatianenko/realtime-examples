@@ -101,3 +101,17 @@ wss.on('connection', (ws, req) => {
   });
 });
 
+/**
+ * Broadcast all stored messages to the specified client.
+ *
+ * @param messages The array of stored messages.
+ * @param client The WebSocket client to send the messages to.
+ */
+function broadcastMessages (messages, client) {
+  messages.forEach((message) => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(message, { binary: false });
+    }
+  });
+}
+
