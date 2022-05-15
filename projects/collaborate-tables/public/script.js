@@ -36,4 +36,27 @@
     });
 
   }
+  socket.onopen = function () {
+    const message = {
+      nickname: nickname,
+      action: 'get_session_id',
+    };
+    socket.send(JSON.stringify(message));
+  };
+
+  socket.onmessage = function (event) {
+    const data = JSON.parse(event.data);
+    if (data.session_id) {
+      // Set the base username using the session ID
+      nickname = `User${data.session_id}`;
+      console.log('Base username:', nickname);
+    }
+    const cell = cells[data.cell];
+    updateCellText(cell, data);
+
+    const cellPosition = calculateCellPosition(cell);
+    updateTooltipText(`${data.author}`);
+    tooltip.style.top = `${cellPosition.top + 10}px`;
+    tooltip.style.left = `${cellPosition.left}px`;
+  };
 })();
