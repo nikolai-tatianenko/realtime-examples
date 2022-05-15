@@ -1,20 +1,24 @@
-(function () {
+/**
+ * Initializes the application and sets up the WebSocket connection.
+ */
+function initApplication() {
   const table = document.querySelector('#table');
   const cells = {};
+  // URL of the WebSocket server.
   const HOST = '127.0.0.1';
   const PORT = '8000';
   const API_URL = `ws://${HOST}:${PORT}/`;
   const socket = new WebSocket(API_URL);
-  console.log({ socket });
+  // Generate user name
   const randomNumber = Math.floor(Math.random() * 100) + 1;
   let nickname = `User #${randomNumber}`;
   let tooltip;
   let sessionId;
 
   /**
-   * Create or update the tooltip element.
+   * Creates or updates the tooltip element.
    */
-  function createTooltip () {
+  function createTooltip() {
     // Remove existing tooltip if present
     if (tooltip) {
       tooltip.remove();
@@ -27,15 +31,21 @@
     document.body.appendChild(tooltip);
   }
 
-  function updateUserName () {
+  /**
+   * Updates the username input field and event listener.
+   */
+  function updateUserName() {
     const usernameInput = document.querySelector('input[name=username]');
     usernameInput.value = nickname;
     usernameInput.addEventListener('input', function (event) {
       nickname = event.target.value;
       console.log({ nickname });
     });
-
   }
+
+  createTooltip();
+  updateUserName();
+
   socket.onopen = function () {
     const message = {
       nickname: nickname,
