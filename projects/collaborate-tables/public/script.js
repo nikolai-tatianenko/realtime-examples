@@ -69,4 +69,28 @@ function initApplication() {
     tooltip.style.top = `${cellPosition.top + 10}px`;
     tooltip.style.left = `${cellPosition.left}px`;
   };
+
+  /**
+   * Updates the cell text based on the received data.
+   * @param {HTMLElement} cell - The cell element to update.
+   * @param {Object} data - The data received from the WebSocket.
+   */
+  function updateCellText(cell, data) {
+    if (data.value) {
+      cell.value = data.value;
+    }
+    if (data.author) {
+      cell.dataset.author = data.author;
+      cell.setAttribute('title', `${data.author}`);
+    }
+  }
+
+  /**
+   * Updates the tooltip text.
+   * @param {string} text - The text to display in the tooltip.
+   */
+  function updateTooltipText(text) {
+    tooltip.textContent = text;
+  }
+
 })();
