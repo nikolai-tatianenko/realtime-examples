@@ -26,4 +26,14 @@
     tooltip.classList.add('tooltip');
     document.body.appendChild(tooltip);
   }
+
+  function updateUserName () {
+    const usernameInput = document.querySelector('input[name=username]');
+    usernameInput.value = nickname;
+    usernameInput.addEventListener('input', function (event) {
+      nickname = event.target.value;
+      console.log({ nickname });
+    });
+
+  }
 })();
