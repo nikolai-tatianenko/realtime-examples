@@ -93,4 +93,25 @@ function initApplication() {
     tooltip.textContent = text;
   }
 
+  document.addEventListener('mousemove', function (event) {
+    // Handle mousemove event
+  });
+
+  /**
+   * Calculates the position of the cell relative to the table.
+   * @param {HTMLElement} cell - The cell element.
+   * @returns {Object} - The position of the cell (top and left offsets).
+   */
+  function calculateCellPosition(cell) {
+    const tableRect = table.getBoundingClientRect();
+    const cellRect = cell.getBoundingClientRect();
+
+    const cellPosition = {
+      top: cellRect.top - tableRect.top,
+      left: cellRect.left - tableRect.left,
+    };
+
+    return cellPosition;
+  }
+
 })();
