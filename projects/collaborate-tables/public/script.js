@@ -114,4 +114,17 @@ function initApplication() {
     return cellPosition;
   }
 
+  /**
+   * Handles the keyup event and sends the updated cell data via WebSocket.
+   * @param {Event} event - The keyup event.
+   */
+  function onKeyup(event) {
+    const message = {
+      cell: event.target.id,
+      value: event.target.value,
+      author: nickname,
+    };
+    socket.send(JSON.stringify(message));
+  }
+
 })();
