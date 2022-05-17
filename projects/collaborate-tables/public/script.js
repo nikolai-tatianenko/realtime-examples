@@ -127,4 +127,40 @@ function initApplication() {
     socket.send(JSON.stringify(message));
   }
 
+  /**
+   * Generates the table structure with columns and an initial row.
+   * @param {HTMLElement} table - The table element.
+   * @param {Array} columns - An array of column names.
+   */
+  function generateTable(table, columns) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = '<td></td>' +
+      columns.map((column) => `<td>${column}</td>`).join('');
+    table.appendChild(tr);
+  }
+
+  /**
+   * Generates a new row in the table.
+   * @param {HTMLElement} table - The table element.
+   * @param {number} rowIndex - The index of the row.
+   * @param {Array} columns - An array of column names.
+   */
+  function generateRow(table, rowIndex, columns) {
+    const tr = document.createElement('tr');
+
+    tr.innerHTML =
+      `<td>${rowIndex}</td>` +
+      columns.map(
+        (column) => `<td><input id="${column}${rowIndex}" type="text"></td>`).
+        join('');
+    table.appendChild(tr);
+
+    columns.forEach((column) => {
+      const cellId = `${column}${rowIndex}`;
+      const input = document.getElementById(cellId);
+      input.addEventListener('keyup', onKeyup);
+      cells[cellId] = input;
+    });
+  }
+
 })();
