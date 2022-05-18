@@ -163,4 +163,29 @@ function initApplication() {
     });
   }
 
+  /**
+   * Fills the table with columns and rows.
+   * @param {HTMLElement} table - The table element.
+   */
+  function fillTable(table) {
+    const COLUMNS = [];
+    for (let i = 65; i <= 90; i++) {
+      const column = String.fromCharCode(i);
+      COLUMNS.push(column);
+    }
+    const ROWS_COUNT = 100;
+
+    generateTable(table, COLUMNS);
+
+    for (let i = 1; i <= ROWS_COUNT; i++) {
+      generateRow(table, i, COLUMNS);
+    }
+  }
+
+  fillTable(table);
+}
+
+// Initialize the application
+(function () {
+  initApplication();
 })();
