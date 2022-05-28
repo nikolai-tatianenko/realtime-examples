@@ -1,0 +1,18 @@
+{
+  "name": "collaborative-table",
+  "version": "1.0.0",
+  "description": "vanilla.js express table collaboration example",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "nodemon src/server.js",
+    "start:client": "npx http-server ./public"
+  },
+  "author": "nikolai.tatianenko@gmail.com",
+  "dependencies": {
+    "dotenv": "^9.0.1",
+    "ws": "^7.4.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
